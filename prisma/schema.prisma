@@ -14,13 +14,26 @@ datasource db {
 }
 
 model Album {
-  id Int @id @default(autoincrement())
-  name String @db.Char(255)
+  id          Int      @id @default(autoincrement())
+  name        String   @db.Char(255)
   description String
-  cover String
-  smallCover String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  cover       String
+  smallCover  String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
   releaseDate DateTime
-  popularity Int
+  popularity  Int
+  artistId Int
+  artist Artists @relation(fields: [artistId],references: [id])
+}
+
+model Artists {
+  id          Int      @id @default(autoincrement())
+  name        String   @db.Char(255)
+  bio         String
+  description String
+  photo       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  albums Album[]
 }
