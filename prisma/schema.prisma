@@ -25,6 +25,7 @@ model Album {
   popularity  Int
   artistId Int
   artist Artists @relation(fields: [artistId],references: [id])
+  tracks Tracks[]
 }
 
 model Artists {
@@ -36,4 +37,16 @@ model Artists {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   albums Album[]
+}
+
+model Tracks {
+  id          Int      @id @default(autoincrement())
+  name        String   @db.Char(255)
+  trackNo     Int
+  duration    Int
+  mp3         String
+  album       Album @relation(fields: [albumId],references: [id])
+  albumId     Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

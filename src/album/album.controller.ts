@@ -4,10 +4,12 @@ import { AlbumService } from './album.service';
 
 @Controller('albums')
 export class AlbumController {
+    
     constructor(private readonly albumService:AlbumService){}
+
     @Get("")
-    getAlbums(){
-        return this.albumService.getAlbums()
+    async getAlbums(){
+        return await this.albumService.getAlbums()
     }
 
     @Get(":id")

@@ -6,8 +6,8 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class AlbumService {
     constructor(private readonly prismaService: PrismaService){}
 
-    getAlbums() {
-        return this.prismaService.album.findMany()
+    async getAlbums() {
+        return await this.prismaService.album.findMany()
     }
 
     getAlbumById(id: number) {
@@ -17,6 +17,7 @@ export class AlbumService {
             },
             include:{
                 artist:true,
+                tracks:true
             }
         })
     }
