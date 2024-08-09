@@ -13,12 +13,12 @@ export class AlbumController {
     }
 
     @Get(":id")
-    getAlbumById(@Param('id', ParseIntPipe) id: number){
+    async getAlbumById(@Param('id', ParseIntPipe) id: number){
         return this.albumService.getAlbumById(id)
     }
 
     @Post("")
-    addAlbum(@Body() albumDto:AlbumDto){
+    async addAlbum(@Body() albumDto:AlbumDto){
         return this.albumService.addAlbums(albumDto)
     }
 }

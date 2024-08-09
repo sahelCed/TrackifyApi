@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
@@ -11,12 +11,11 @@ export class ArtistsService {
 
 
     async getArtistById(id: number) {
-        return await this.prismaService.artists.findUnique(
-            {
-                where:{
-                    id
-                }
-            }
-        )
+        try {
+            return await this.prismaService.artists.findUniqueOrThrow({ where: { id } })
+        } catch (error) {
+            throw new NotFoundException(`Artist with ID ${id} not found`)
+        }
+        
     }
 }

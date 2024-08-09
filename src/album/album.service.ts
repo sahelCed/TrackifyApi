@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { AlbumDto } from './dto/album.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -10,16 +10,13 @@ export class AlbumService {
         return await this.prismaService.album.findMany()
     }
 
-    getAlbumById(id: number) {
-        return this.prismaService.album.findUnique({
-            where:{
-                id:id
-            },
-            include:{
-                artist:true,
-                tracks:true
-            }
-        })
+    async getAlbumById(id: number) {
+        try {
+            return await this.prismaService.album.findUniqueOrThrow({ where: { id } })
+        } catch (error) {
+            throw new NotFoundException(`Album with ID ${id} not found`)
+        }
+        
     }
 
     addAlbums(albumDto: AlbumDto){
